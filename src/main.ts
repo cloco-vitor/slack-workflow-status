@@ -21,6 +21,8 @@ interface SlackPayloadBody {
     username?: string,
     icon_emoji?: string,
     icon_url?: string,
+    text?: string,
+    unfurl_links?: boolean,
     attachments: SlackAttachment[]
 }
 
@@ -60,6 +62,8 @@ async function main(){
   const include_jobs: string = core.getInput('include_jobs', { required: true })
   const slack_channel: string = core.getInput('channel')
   const slack_name: string = core.getInput('name')
+  const text: string = core.getInput('text')
+  const unfurl_links: boolean = core.getInput('unfurl_links') == 'true'
   const slack_icon: string = core.getInput('icon_url')
   const slack_emoji: string = core.getInput('icon_emoji') // https://www.webfx.com/tools/emoji-cheat-sheet/
   // Force as secret, forces *** when trying to print or log values
@@ -182,6 +186,12 @@ async function main(){
   }
   if(slack_icon != ""){
     slack_payload_body.icon_url = slack_icon
+  }
+  if(text != ""){
+    slack_payload_body.text = text
+  }
+  if(unfurl_links){
+    slack_payload_body.unfurl_links = unfurl_links
   }
 
   const request_options = {
