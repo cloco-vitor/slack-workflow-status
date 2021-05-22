@@ -23,7 +23,19 @@ interface SlackPayloadBody {
     icon_url?: string,
     text?: string,
     unfurl_links?: boolean,
+    blocks?: SlackBlock[],
     attachments: SlackAttachment[]
+}
+
+interface SlackBlock {
+  type: string
+  text: BlockText
+}
+
+interface BlockText {
+  type: string
+  unfurl_links?: boolean
+  text: string
 }
 
 interface SlackAttachment {
@@ -63,6 +75,7 @@ async function main(){
   const slack_channel: string = core.getInput('channel')
   const slack_name: string = core.getInput('name')
   const text: string = core.getInput('text')
+  const section_text: string = core.getInput('section_text')
   const unfurl_links: boolean = core.getInput('unfurl_links') == 'true'
   const slack_icon: string = core.getInput('icon_url')
   const slack_emoji: string = core.getInput('icon_emoji') // https://www.webfx.com/tools/emoji-cheat-sheet/
@@ -169,8 +182,20 @@ async function main(){
     footer_icon: "https://github.githubassets.com/favicon.ico",
     fields: (include_jobs == 'true') ? job_fields : []
   }
+
+  const block_text: BlockText = {
+    type: "mrkdwn",
+    unfurl_links: true,
+    text: section_text
+  } 
+
+  const slack_section: SlackBlock = {
+    type: "section",
+    text: block_text
+  }
   // Build our notification payload
   const slack_payload_body: SlackPayloadBody = {
+    blocks: [slack_section],
     attachments: [slack_attachment]
   }
 

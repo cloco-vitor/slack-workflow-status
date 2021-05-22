@@ -3380,6 +3380,7 @@ async function main() {
     const slack_channel = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('channel');
     const slack_name = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('name');
     const text = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('text');
+    const section_text = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('section_text');
     const unfurl_links = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('unfurl_links') == 'true';
     const slack_icon = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('icon_url');
     const slack_emoji = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('icon_emoji'); // https://www.webfx.com/tools/emoji-cheat-sheet/
@@ -3480,8 +3481,18 @@ async function main() {
         footer_icon: "https://github.githubassets.com/favicon.ico",
         fields: (include_jobs == 'true') ? job_fields : []
     };
+    const block_text = {
+        type: "mrkdwn",
+        unfurl_links: true,
+        text: section_text
+    };
+    const slack_section = {
+        type: "section",
+        text: block_text
+    };
     // Build our notification payload
     const slack_payload_body = {
+        blocks: [slack_section],
         attachments: [slack_attachment]
     };
     // Do we have any overrides?
