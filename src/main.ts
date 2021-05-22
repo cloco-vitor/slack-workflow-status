@@ -193,7 +193,7 @@ async function main(){
   }
   // Build our notification payload
   const slack_payload_body: SlackPayloadBody = {
-    blocks: [slack_section],
+    // blocks: [slack_section],
     attachments: [slack_attachment]
   }
 
