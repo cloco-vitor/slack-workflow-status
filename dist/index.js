@@ -3483,7 +3483,6 @@ async function main() {
     };
     const block_text = {
         type: "mrkdwn",
-        unfurl_links: true,
         text: section_text
     };
     const slack_section = {
@@ -3520,7 +3519,6 @@ async function main() {
         body: slack_payload_body,
         json: true
     };
-    _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(JSON.stringify(request_options));
     request_promise_native__WEBPACK_IMPORTED_MODULE_2__(request_options).catch(err => {
         _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(err);
     });

@@ -34,7 +34,6 @@ interface SlackBlock {
 
 interface BlockText {
   type: string
-  unfurl_links?: boolean
   text: string
 }
 
@@ -185,7 +184,6 @@ async function main(){
 
   const block_text: BlockText = {
     type: "mrkdwn",
-    unfurl_links: true,
     text: section_text
   } 
 
@@ -225,8 +223,6 @@ async function main(){
     body: slack_payload_body,
     json: true
   }
-
-  core.info(JSON.stringify(request_options))
 
   request(request_options).catch(err => {
     core.setFailed(err)
