@@ -226,6 +226,8 @@ async function main(){
     json: true
   }
 
+  core.info(JSON.stringify(request_options))
+
   request(request_options).catch(err => {
     core.setFailed(err)
   })
